@@ -7,7 +7,8 @@ class CsvFilter {
         val invoice = lines[1]
         val fields = invoice.split(',')
         if (fields[4].isNullOrEmpty() || fields[5].isNullOrEmpty()){
-            result.add(lines[1])
+            if (!(fields[4].isNullOrEmpty() && fields[5].isNullOrEmpty()))
+                result.add(lines[1])
         }
         return result.toList()
     }
