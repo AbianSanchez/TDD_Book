@@ -8,8 +8,11 @@ class CsvFilter {
         val fields = invoice.split(',')
         val ivaFieldIndex = 4
         val igicFieldIndex = 5
-        val bothTaxFieldsAreAdded = (fields[ivaFieldIndex].isNullOrEmpty() || fields[igicFieldIndex].isNullOrEmpty())
-        val bothTaxFieldsAreEmpty = !(fields[ivaFieldIndex].isNullOrEmpty() && fields[igicFieldIndex].isNullOrEmpty())
+        val ivaField = fields[ivaFieldIndex]
+        val igicField = fields[igicFieldIndex]
+        val decimalRegex = "\\d+(\\.\\d+)?".toRegex()
+        val bothTaxFieldsAreAdded = (ivaField.matches(decimalRegex) || igicField.matches(decimalRegex))
+        val bothTaxFieldsAreEmpty = !(ivaField.matches(decimalRegex) && igicField.matches(decimalRegex))
         if (bothTaxFieldsAreAdded && bothTaxFieldsAreEmpty){
             result.add(lines[1])
         }
